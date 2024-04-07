@@ -22,14 +22,18 @@
         <nav class="flex items-center justify-around w-[320px]">
             <a href="../index.html">HOME</a>
             <a class="border-2 px-4 py-1 font-bold" href="#">MOVIES</a>
-            <a href="./favs.html">FAVS</a>
+            <a href="#">FAVS</a>
         </nav>
     </header>
     <main class="min-h-[78vh] bg-[#212121] text-white">
-        <section class="flex justify-center flex-col items-center text-black">
-            <div class="py-10 w-[95%] bg-[#adadad] text-center my-6">
+        <section class="flex justify-center flex-col items-center text-black gap-4">
+            <div class="py-10 w-[95%] bg-[#adadad] text-center mt-6">
                 <h2 class="text-5xl">MOVIES</h2>
             </div>
+            <label class="text-white">Search by name: 
+                <input class="text-black" type="text" id="search">
+            </label>
+            <div class="text-white flex h-[200px] flex-wrap w-[80%] gap-4 border-2 p-2 m-2"   id="checkboxs"></div>
             <article id="container" class="flex flex-wrap justify-center gap-10 w-[90%] pb-20"></article>
         </section>
     </main>
