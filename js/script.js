@@ -2,14 +2,14 @@ let container = document.getElementById("container")
 let contenedorCheckboxs = document.getElementById("checkboxs")
 let inputTexto = document.getElementById("search")
 
-let createCard = objeto => `<div class="h-[430px] w-[320px] bg-[#adadad] rounded-3xl p-4">
+let createCard = objeto => `<div class="h-[430px] w-[320px] bg-[#adadad] rounded-3xl p-4 flex flex-col">
     <img class="h-[50%] object-cover" src="${objeto.image}" alt="${objeto.title}">
-    <div>
+    <div class="flex-1">
         <h3 class="font-semibold text-lg">${objeto.title}</h3>
         <h4 class="italic font-light">${objeto.tagline}</h4>
         <p class="text-sm">${cortarTexto(objeto.overview)}</p>
-        <a href="./details.html?id=${objeto.id}">See more</a>
-    </div>
+        </div>
+        <a class="mt-auto text-lg hover:text-white" href="./details.html?id=${objeto.id}">See more</a>
     </div>`
 
 
