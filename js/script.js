@@ -2,19 +2,20 @@ let container = document.getElementById("container")
 let contenedorCheckboxs = document.getElementById("checkboxs")
 let inputTexto = document.getElementById("search")
 
-let createCard = array => `<div class="h-[430px] w-[320px] bg-[#adadad] rounded-3xl p-4">
-    <img class="h-[50%] object-cover" src="${array.image}" alt="${array.title}">
+let createCard = objeto => `<div class="h-[430px] w-[320px] bg-[#adadad] rounded-3xl p-4">
+    <img class="h-[50%] object-cover" src="${objeto.image}" alt="${objeto.title}">
     <div>
-        <h3 class="font-semibold text-lg">${array.title}</h3>
-        <h4 class="italic font-light">${array.tagline}</h4>
-        <p class="text-sm">${cortarTexto(array.overview)}</p>
+        <h3 class="font-semibold text-lg">${objeto.title}</h3>
+        <h4 class="italic font-light">${objeto.tagline}</h4>
+        <p class="text-sm">${cortarTexto(objeto.overview)}</p>
+        <a href="./details.html?id=${objeto.id}">See more</a>
     </div>
     </div>`
 
 
 let cortarTexto = texto => {
-    if (texto.length > 170) {
-        return `${texto.slice(0, 170)}...`
+    if (texto.length > 175) {
+        return `${texto.slice(0, 175)}...`
     } else {
         return texto
     }
@@ -59,7 +60,6 @@ contenedorCheckboxs.addEventListener("change", (e) => {
 })
 inputTexto.addEventListener("input", (e) => {
     textoIngresado = e.target.value.trim().toLowerCase()
-    console.log(textoIngresado);
     renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container)
 })
 
