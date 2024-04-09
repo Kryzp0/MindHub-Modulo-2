@@ -3,26 +3,10 @@ let id = url.get("id")
 console.log(id);
 let peliculaPorId = (array, id) => array.find(pelicula => pelicula.id == id)
 console.log(peliculaPorId(movies,id));
-
 let contenedorDetalles = document.getElementById("detailsContainer")
 
+import formateos from './modulos/formateos.js'
 
-let formatearNumero = numero => {
-    let numeroComoTexto = numero.toString();
-    let partes = [];
-    while (numeroComoTexto.length > 3) {
-        // Se toman los últimos 3 digitos del string y se agregan al inicio del array vacío
-        partes.unshift(numeroComoTexto.slice(-3));
-        // Se actualiza el string para que ya no incluya los numeros que se sacaron
-        numeroComoTexto = numeroComoTexto.slice(0, -3);
-    }
-    // Se agregan los numeros restantes al inicio del array quedando un conjunto de strings de 3 digitos cada uno
-    partes.unshift(numeroComoTexto);
-    // Se retorna un único string compuesto por la concatenación de un punto entre cada uno de los string dentro del array
-    return partes.join('.');
-}
-
-let cambiarPunto = numero => numero.toString().replace('.',',')
 
 let createDetails = objeto => `<div class="flex flex-wrap justify-center w-[90%] pt-8 gap-4 md:justify-around">
 <div class="md:w-5/12 h-[300px]">
@@ -60,15 +44,15 @@ let createDetails = objeto => `<div class="flex flex-wrap justify-center w-[90%]
     <tbody>
         <tr>
             <th class="border p-2">vote average</th>
-            <td class="border p-2">${cambiarPunto(objeto.vote_average)} %</td>
+            <td class="border p-2">${formateos.cambiarPunto(objeto.vote_average)} %</td>
         </tr>
         <tr>
             <th class="border p-2">budget</th>
-            <td class="border p-2">USD ${formatearNumero(objeto.budget)}</td>
+            <td class="border p-2">USD ${formateos.formatearNumero(objeto.budget)}</td>
         </tr>
         <tr>
             <th class="border p-2">revenue</th>
-            <td class="border p-2">USD ${formatearNumero(objeto.revenue)}</td>
+            <td class="border p-2">USD ${formateos.formatearNumero(objeto.revenue)}</td>
         </tr>
     </tbody>
 </table>
