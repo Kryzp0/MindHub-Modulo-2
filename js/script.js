@@ -1,31 +1,15 @@
+let movies = []
 let container = document.getElementById("container")
 let contenedorCheckboxs = document.getElementById("checkboxs")
 let inputTexto = document.getElementById("search")
 
-let createCard = objeto => `<div class="h-[430px] w-[320px] bg-[#adadad] rounded-3xl p-4 flex flex-col">
-    <img class="h-[50%] object-cover" src="${objeto.image}" alt="${objeto.title}">
-    <div class="flex-1">
-        <h3 class="font-semibold text-lg">${objeto.title}</h3>
-        <h4 class="italic font-light">${objeto.tagline}</h4>
-        <p class="text-sm">${cortarTexto(objeto.overview)}</p>
-        </div>
-        <a class="mt-auto text-lg hover:text-white" href="./details.html?id=${objeto.id}">See more</a>
-    </div>`
-
-
-let cortarTexto = texto => {
-    if (texto.length > 175) {
-        return `${texto.slice(0, 175)}...`
-    } else {
-        return texto
-    }
-}
+import creacion from './modulos/crearHTML.js'
 
 let renderCard = (array, contenedor) => {
     let template = ''
     if (array.length != 0) {
         for (const iterator of array) {
-            template += createCard(iterator)
+            template += creacion.createCard(iterator)
         }
     } else {
         template = '<h2 class="text-white">Sorry, no movies match your filters. Please try adjusting your selections or search criteria.</h2>'
@@ -36,20 +20,15 @@ let renderCard = (array, contenedor) => {
 // Se guarda en un nuevo array plano cada propiedad genres, debe ser plano para asegurar que solo sea un array y poder guardar en un Set evitando que se repita cada genero
 let generos = array => new Set(array.flatMap(e => e.genres))
 
-
-let crearCheckbox = nombre => `<label>${nombre}
-<input type="checkbox" name="${nombre}" value="${nombre}">
-</label>`
-
 let renderCheckbox = (array, contenedor) => {
     let template = ''
-    array.forEach(element => { template += crearCheckbox(element) });
+    array.forEach(element => { template += creacion.crearCheckbox(element) });
     contenedor.innerHTML = template
 }
 
-renderCheckbox(generos(movies), contenedorCheckboxs)
+// renderCheckbox(generos(movies), contenedorCheckboxs)
 
-renderCard(movies, container)
+// renderCard(movies, container)
 
 let generosSeleccionados = []
 let textoIngresado = ''
@@ -74,3 +53,18 @@ let peliculasPorCheck = (array, arrayChecks) => {
 }
 let peliculasPorTexto = (array, textoIngresado) => array.filter(pelicula => pelicula.title.toLocaleLowerCase().includes(textoIngresado))
 
+fetch('https://moviestack.onrender.com/api/movies',
+    {
+        headers:
+        {
+            'X-API-Key': '0ff70d54-dc0b-4262-9c3d-776cb0f34dbd'
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        movies = data.movies
+        renderCheckbox(generos(movies),contenedorCheckboxs)
+        renderCard(movies,container)
+        console.log(movies);
+    })
+    .catch(err => console.log(err))

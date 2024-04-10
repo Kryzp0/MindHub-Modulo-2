@@ -15,7 +15,16 @@ let formatearNumero = numero => {
 
 let cambiarPunto = numero => numero.toString().replace('.',',')
 
+let cortarTexto = texto => {
+    if (texto.length > 175) {
+        return `${texto.slice(0, 175)}...`
+    } else {
+        return texto
+    }
+}
+
 export default {
     formatearNumero,
-    cambiarPunto
+    cambiarPunto,
+    cortarTexto
 };
