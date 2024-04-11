@@ -48,11 +48,7 @@ fetch('https://moviestack.onrender.com/api/movies',
     .catch(err => console.log(err))
 
 
-let favsID = []
-let favsIDStorage = JSON.parse(localStorage.getItem('favsID'))
-if (favsIDStorage) {
-    favsID = favsIDStorage
-}
+let favsID = JSON.parse(localStorage.getItem('favsID')) || []
 container.addEventListener("click", (e) => {
     let peliculaID = e.target.dataset.id
     if (peliculaID) {
