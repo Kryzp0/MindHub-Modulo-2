@@ -2,6 +2,7 @@ let movies = []
 let container = document.getElementById("container")
 let contenedorCheckboxs = document.getElementById("checkboxs")
 let inputTexto = document.getElementById("search")
+let favsID = JSON.parse(localStorage.getItem('favsID')) || []
 
 import renderizar from "./modulos/renderizar.js"
 
@@ -43,22 +44,23 @@ fetch('https://moviestack.onrender.com/api/movies',
         movies = data.movies
         console.log(movies);
         renderizar.renderCheckbox(generos(movies), contenedorCheckboxs)
-        renderizar.renderCard(movies, container)
+        renderizar.renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container)
+        container.addEventListener("click", (e) => {
+            let peliculaID = e.target.dataset.id
+            if (peliculaID) {
+                if (favsID.includes(peliculaID)) {
+                    // Si ya está incluido, se filtra el array con todos los elementos que no coincidan con el ID seleccionado
+                    favsID = favsID.filter(id => id !== peliculaID);
+                } else {
+                    favsID.push(peliculaID);
+                }
+                localStorage.setItem('favsID', JSON.stringify(favsID))
+                container.innerHTML=''
+                setTimeout(() => {
+                    renderizar.renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container);
+                }, 1000);
+            }
+            console.log(favsID);
+        })
     })
     .catch(err => console.log(err))
-
-
-let favsID = JSON.parse(localStorage.getItem('favsID')) || []
-container.addEventListener("click", (e) => {
-    let peliculaID = e.target.dataset.id
-    if (peliculaID) {
-        if (favsID.includes(peliculaID)) {
-            // Si ya está incluido, se filtra el array con todos los elementos que no coincidan con el ID seleccionado
-            favsID = favsID.filter(id => id !== peliculaID);
-        } else {
-            favsID.push(peliculaID);
-        }
-        localStorage.setItem('favsID', JSON.stringify(favsID))
-    }
-    console.log(favsID);
-})
