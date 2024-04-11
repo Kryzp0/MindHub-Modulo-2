@@ -26,5 +26,5 @@ let cortarTexto = texto => {
 export default {
     formatearNumero,
     cambiarPunto,
-    cortarTexto
+    cortarTexto,
 };
