@@ -55,10 +55,7 @@ fetch('https://moviestack.onrender.com/api/movies',
                     favsID.push(peliculaID);
                 }
                 localStorage.setItem('favsID', JSON.stringify(favsID))
-                container.innerHTML=''
-                setTimeout(() => {
-                    renderizar.renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container);
-                }, 1000);
+                renderizar.renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container)
             }
             console.log(favsID);
         })
