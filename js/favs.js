@@ -2,8 +2,9 @@ let favsContainer = document.getElementById("container")
 let movies = []
 let favsID = []
 let favsIDStorage = JSON.parse(localStorage.getItem('favsID'))
-
-favsID = favsIDStorage
+if (favsIDStorage) {
+    favsID = favsIDStorage
+}
 container.addEventListener("click", (e) => {
     let peliculaID = e.target.dataset.id
     if (peliculaID) {
