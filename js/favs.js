@@ -18,8 +18,8 @@ fetch('https://moviestack.onrender.com/api/movies',
 .then(data => {
     movies = data.movies
     renderizar.renderCard(peliculasPorID(movies,favsID), favsContainer)
-    container.addEventListener("click", (event) => {
-        let target = event.target;
+    container.addEventListener("click", (e) => {
+        let target = e.target;
         console.log(target);
         if (target.tagName === 'ION-ICON') {
             let peliculaID = target.dataset.id;

@@ -50,27 +50,30 @@ let createDetails = objeto => `<div class="flex flex-wrap justify-center w-[90%]
     </table>
     </article>`
 
-let favsID = JSON.parse(localStorage.getItem('favsID')) || []
+    let createCard = objeto => {
 
-let createCard = objeto => `<div class="relative h-[430px] w-[320px] bg-[#adadad] rounded-3xl p-4 flex flex-col">
-    <img class="h-[50%] object-cover mt-2 border border-black" src="https://moviestack.onrender.com/static/${objeto.image}" alt="${objeto.title}">
-        <div class="flex-1">
-            <h3 class="font-semibold text-lg">${objeto.title}</h3>
-            <h4 class="italic font-light">${objeto.tagline}</h4>
-            <p class="text-sm">${formateos.cortarTexto(objeto.overview)}</p>
-            <div class='text-3xl text-center absolute top-3 right-2' data-id="${objeto.id}">
-            ${favsID.includes(objeto.id)?
-            `<ion-icon class="active" name="heart" data-id="${objeto.id}">
-                <div class='red-bg' data-id="${objeto.id}"></div>
-            </ion-icon>`:
-            `<ion-icon name="heart" data-id="${objeto.id}">
-                <div class='red-bg' data-id="${objeto.id}"></div>
-            </ion-icon>` 
-        }
+    let favsID = JSON.parse(localStorage.getItem('favsID')) || []
+    
+    return `<div class="relative h-[430px] w-[320px] bg-[#adadad] rounded-3xl p-4 flex flex-col">
+        <img class="h-[50%] object-cover mt-2 border border-black" src="https://moviestack.onrender.com/static/${objeto.image}" alt="${objeto.title}">
+            <div class="flex-1">
+                <h3 class="font-semibold text-lg">${objeto.title}</h3>
+                <h4 class="italic font-light">${objeto.tagline}</h4>
+                <p class="text-sm">${formateos.cortarTexto(objeto.overview)}</p>
+                <div class='text-3xl text-center absolute top-3 right-2' data-id="${objeto.id}">
+                ${favsID.includes(objeto.id)?
+                `<ion-icon class="active" name="heart" data-id="${objeto.id}">
+                    <div class='red-bg' data-id="${objeto.id}"></div>
+                </ion-icon>`:
+                `<ion-icon name="heart" data-id="${objeto.id}">
+                    <div class='red-bg' data-id="${objeto.id}"></div>
+                </ion-icon>` 
+            }
+                </div>
             </div>
-        </div>
-            <a class="mt-auto text-lg hover:text-white" href="./details.html?id=${objeto.id}">See more</a>
-    </div>`
+                <a class="mt-auto text-lg hover:text-white" href="./details.html?id=${objeto.id}">See more</a>
+        </div>`
+}
 
 
 let crearCheckbox = nombre => `<label>${nombre}

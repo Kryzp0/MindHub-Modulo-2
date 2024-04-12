@@ -12,6 +12,29 @@ let generos = array => new Set(array.flatMap(e => e.genres))
 let generosSeleccionados = []
 let textoIngresado = ''
 
+contenedorCheckboxs.addEventListener("change", (e) => {
+    // Se agrega al array el valor de todos los input de tipo checkbox que estén checkeados
+    generosSeleccionados = [...document.querySelectorAll('input[type="checkbox"]:checked')].map(input => input.value)
+    renderizar.renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container)
+})
+
+inputTexto.addEventListener("input", (e) => {
+    textoIngresado = e.target.value.trim().toLowerCase()
+    renderizar.renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container)
+})
+
+let peliculasPorCheck = (array, arrayChecks) => {
+    if (generosSeleccionados.length == 0) {
+        return array
+    } else {
+        // Con includes se verifica si generos seleccionados incluye el algun genero del array dentro de la propiedad genres del objeto[0] dentro de movies
+        // Con some se itera en el array genres para usar cada elemento como parametro en el metodo includes
+        return array.filter(pelicula => pelicula.genres.some(genero => arrayChecks.includes(genero)))
+    }
+}
+let peliculasPorTexto = (array, textoIngresado) => array.filter(pelicula => pelicula.title.toLocaleLowerCase().includes(textoIngresado))
+
+
 fetch('https://moviestack.onrender.com/api/movies',
     {
         headers:
@@ -24,8 +47,8 @@ fetch('https://moviestack.onrender.com/api/movies',
         movies = data.movies
         renderizar.renderCheckbox(generos(movies), contenedorCheckboxs)
         renderizar.renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container)
-        container.addEventListener("click", (event) => {
-            let target = event.target;
+        container.addEventListener("click", (e) => {
+            let target = e.target;
             console.log(target);
             if (target.tagName === 'ION-ICON') {
                 let peliculaID = target.dataset.id;
@@ -38,34 +61,7 @@ fetch('https://moviestack.onrender.com/api/movies',
                     favsID.push(peliculaID);
                 }
                 localStorage.setItem('favsID', JSON.stringify(favsID));
-                console.log(favsID);
             }
         });
-        contenedorCheckboxs.addEventListener("change", (e) => {
-            // Se agrega al array el valor de todos los input de tipo checkbox que estén checkeados
-            container.innerHTML=''
-            generosSeleccionados = [...document.querySelectorAll('input[type="checkbox"]:checked')].map(input => input.value)
-            renderizar.renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container)
-        })
-        inputTexto.addEventListener("input", (e) => {
-            container.innerHTML=''
-            textoIngresado = e.target.value.trim().toLowerCase()
-            renderizar.renderCard(peliculasPorTexto(peliculasPorCheck(movies, generosSeleccionados), textoIngresado), container)
-        })
-
-
-        })
+    })
     .catch(err => console.log(err))
-
-    let peliculasPorCheck = (array, arrayChecks) => {
-        if (generosSeleccionados.length == 0) {
-            return array
-        } else {
-            // Con includes se verifica si generos seleccionados incluye el algun genero del array dentro de la propiedad genres del objeto[0] dentro de movies
-            // Con some se itera en el array genres para usar cada elemento como parametro en el metodo includes
-            return array.filter(pelicula => pelicula.genres.some(genero => arrayChecks.includes(genero)))
-        }
-    }
-    let peliculasPorTexto = (array, textoIngresado) => array.filter(pelicula => pelicula.title.toLocaleLowerCase().includes(textoIngresado))
-
-
