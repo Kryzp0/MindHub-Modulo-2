@@ -17,21 +17,23 @@ fetch('https://moviestack.onrender.com/api/movies',
 .then(res => res.json())
 .then(data => {
     movies = data.movies
-    console.log(favsID);
     renderizar.renderCard(peliculasPorID(movies,favsID), favsContainer)
-    container.addEventListener("click", (e) => {
-        let peliculaID = e.target.dataset.id
-        if (peliculaID) {
+    container.addEventListener("click", (event) => {
+        let target = event.target;
+        console.log(target);
+        if (target.tagName === 'ION-ICON') {
+            let peliculaID = target.dataset.id;
+            target.classList.toggle('active');
             if (favsID.includes(peliculaID)) {
                 // Si ya está incluido, se filtra el array con todos los elementos que no coincidan con el ID seleccionado
                 favsID = favsID.filter(id => id !== peliculaID);
             } else {
                 favsID.push(peliculaID);
             }
-            localStorage.setItem('favsID', JSON.stringify(favsID))
+            localStorage.setItem('favsID', JSON.stringify(favsID));
+            console.log(favsID);
             renderizar.renderCard(peliculasPorID(movies,favsID), favsContainer)
         }
-        console.log(favsID);
-    })
+    });
 })
     .catch(err => console.log(err))

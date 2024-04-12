@@ -58,20 +58,17 @@ let createCard = objeto => `<div class="relative h-[430px] w-[320px] bg-[#adadad
             <h3 class="font-semibold text-lg">${objeto.title}</h3>
             <h4 class="italic font-light">${objeto.tagline}</h4>
             <p class="text-sm">${formateos.cortarTexto(objeto.overview)}</p>
-            ${favsID.includes(objeto.id) ?
-            `<button class="absolute top-2 right-1 w-12 h-12 border-none" data-id="${objeto.id}">
-                <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 24 24" fill="red" stroke="black" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round" data-id="${objeto.id}">
-                    <path data-id="${objeto.id}" d="M20.84 4.04a5.5 5.5 0 0 0-7.78 0L12 5.21l-1.06-1.17a5.5 5.5 0 0 0-7.78 7.78l1.06 1.17L12 21l7.78-7.84 1.06-1.16a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-            </button>`
-            :
-            `<button class="absolute top-2 right-1 w-12 h-12 border-none" data-id="${objeto.id}">
-            <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 24 24" fill="#adadad" stroke="black" stroke-width="0.4" stroke-linecap="round" stroke-linejoin="round" data-id="${objeto.id}">
-                <path data-id="${objeto.id}" d="M20.84 4.04a5.5 5.5 0 0 0-7.78 0L12 5.21l-1.06-1.17a5.5 5.5 0 0 0-7.78 7.78l1.06 1.17L12 21l7.78-7.84 1.06-1.16a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-        </button>`
-            }
+            <div class='text-3xl text-center absolute top-3 right-2' data-id="${objeto.id}">
+            ${favsID.includes(objeto.id)?
+            `<ion-icon class="active" name="heart" data-id="${objeto.id}">
+                <div class='red-bg' data-id="${objeto.id}"></div>
+            </ion-icon>`:
+            `<ion-icon name="heart" data-id="${objeto.id}">
+                <div class='red-bg' data-id="${objeto.id}"></div>
+            </ion-icon>` 
+        }
             </div>
+        </div>
             <a class="mt-auto text-lg hover:text-white" href="./details.html?id=${objeto.id}">See more</a>
     </div>`
 
